@@ -8,7 +8,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
 // Initialize Stripe client
 export const stripe = process.env.STRIPE_SECRET_KEY
   ? new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2025-12-15.clover',
+      apiVersion: '2026-09-30.endive',
       typescript: true,
     })
   : null;
@@ -55,7 +55,7 @@ export async function createCheckoutSession({
   const session = await stripe.checkout.sessions.create({
     customer: customerId || undefined,
     mode: 'subscription',
-    payment_method_types: ['card'],
+    allowed_payment_method_types: ['card'],
     line_items: [
       {
         price: priceId,
@@ -102,7 +102,7 @@ export async function createMessagePackCheckout({
   const session = await stripe.checkout.sessions.create({
     customer: customerId,
     mode: 'payment',
-    payment_method_types: ['card'],
+    allowed_payment_method_types: ['card'],
     line_items: [
       {
         price: priceId,
